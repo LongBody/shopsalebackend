@@ -24,7 +24,8 @@ const productSchema = new Schema({
         required: true
     },
     quantity: Number,
-    brand: String
+    brand: String,
+    star: Number
 
 })
 

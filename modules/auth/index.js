@@ -2,26 +2,20 @@ const userProfileModel = require('./model')
 const { signToken, verifyToken, SECRET_STRING } = require('./jwt')
 let crypto = require('crypto')
 const jwt = require('jsonwebtoken')
-
-
-let sourcePassword = '123123'
-
 const nodemailer = require("nodemailer");
 
 const handler = {
     async createUser(req, res, next) {
 
-        let password = hashMd5(sourcePassword)
+        let { email, password, firstName, lastName } = req.query
 
-        console.log(password)
-
-
+        let passwordHash = hashMd5(password)
 
         let user = {
-            email: 'nguyenthanhlong1120@gmail.com',
-            password: password,
-            fullName: "LongNT",
-            roles: ['admin'],
+            email: email,
+            password: passwordHash,
+            fullName: lastName + firstName,
+            roles: ['user'],
             verify: false
         }
 
@@ -29,7 +23,7 @@ const handler = {
         userPayload.accessToken = signToken(user)
 
         let item = await userProfileModel.create(user)
-        let verifyUrl = "http://localhost:8888/api/sign-in/verifyEmail" + userPayload.accessToken
+        let verifyUrl = "https://shopsale.herokuapp.com/api/sign-in/verifyEmail" + userPayload.accessToken
 
         let transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -75,13 +69,16 @@ const handler = {
 
 
             if (user.verify === false) {
+                res.json({ message: "You need verify your email" })
                 throw new Error("You need verify your email")
             }
 
             if (hashPassword != user.password) {
+                res.json({ message: "Your email or password is incorrect" })
                 throw new Error("Wrong email or password")
             }
             if (!user) {
+                res.json({ message: "Your email or password is incorrect" })
                 throw new Error("Wrong email or password")
             }
 
