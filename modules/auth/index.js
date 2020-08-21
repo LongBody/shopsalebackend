@@ -48,7 +48,10 @@ const handler = {
 
 
 
-        res.json(item)
+        res.json({
+            item,
+            message: "You have register Successfully"
+        })
 
     },
     async logIn(req, res, next) {
