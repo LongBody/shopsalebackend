@@ -3,6 +3,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const router = require('./routers')
 var cors = require('cors');
+const { AwakeHeroku } = require('awake-heroku');
+
+
 
 
 require('dotenv').config()
@@ -14,6 +17,14 @@ var io = require('socket.io')(http);
 const port = 8888
 app.use(cors());
 // const router = require('./routers')
+
+
+AwakeService.add({
+
+    url: "https://shopsale.herokuapp.com"
+
+})
+
 
 app.use(bodyParser.urlencoded({ extended: false })); // Parses urlencoded bodies
 app.use(bodyParser.json()); // Send JSON responses

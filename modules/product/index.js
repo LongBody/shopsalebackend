@@ -75,7 +75,9 @@ const handler = {
 
     async findOne(req, res, next) {
         try {
+            console.log(req.params)
             let id = req.params.id
+            console.log(id)
             let item = await productModel.findById(id)
             console.log(item)
             res.json(item)
