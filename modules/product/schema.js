@@ -9,7 +9,7 @@ const Schema = mongoose.Schema
 const productSchema = new Schema({
     bio: String,
     price: {
-        type: String,
+        type: Number,
         required: true,
     },
     title: {
@@ -35,5 +35,3 @@ const productSchema = new Schema({
 //     console.log(err);
 //     console.log(data);
 // })
-
-module.exports = productSchema

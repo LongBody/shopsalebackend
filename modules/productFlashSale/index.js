@@ -40,38 +40,6 @@ const handler = {
 
     },
 
-    async search(req, res, next) {
-        try {
-            let { search = '' } = req.query
-                // if (search) {
-                //     condition.title = new RegExp(search, 'i')
-
-            // }
-            // search = new RegExp(search, 'i')
-
-
-            let searchWord = search
-            if (search.toLowerCase().includes("dien")) {
-                searchWord = search.replace(/dien|Dien/g, "điện");
-            }
-            if (search.toLowerCase().includes("dong")) {
-                searchWord = search.replace(/dong|Dong/g, "đong");
-            }
-
-
-            var phrase = "\"" + searchWord + "\""
-
-            console.log(phrase)
-
-
-            let items = await productModel.find({ $text: { $search: phrase } })
-            res.json(items)
-
-        } catch (error) {
-            next(error)
-        }
-
-    },
 
     async findOne(req, res, next) {
         try {
@@ -86,47 +54,17 @@ const handler = {
         }
 
     },
-
     async create(req, res, next) {
         try {
-            console.log(req.body)
-            let data = req.body // { title: '123', description: '123' }
-            console.log(data + "ok")
+            let data = req.body
+            console.log(data)
             let item = await productModel.create(data) // { _id: '', title, description }
             res.json(item)
         } catch (err) {
             next(err)
         }
     },
-    async update(req, res, next) {
-        try {
-            let data = req.body
-            let id = req.body._id
 
-            if (!id) {
-                throw new Error(`Require 'id' to update!`)
-            }
-
-            let item = await productModel.findByIdAndUpdate(
-                id,
-                data, { new: true }
-            )
-            res.json(item)
-
-        } catch (err) {
-            next(err)
-        }
-    },
-
-    async delete(req, res, next) {
-        try {
-            let id = req.params.id
-            let item = await productModel.findByIdAndDelete(id)
-            res.json(item)
-        } catch (error) {
-            next(error)
-        }
-    }
 }
 
 module.exports = handler
