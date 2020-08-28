@@ -154,10 +154,10 @@ const handler = {
 
             let items = await userProfileModel.find({ keyAdmin: key })
 
-            if (items.length === 0) {
-                res.json({ message: "You enter incorrect key of account Admin" })
-                throw new Error("You enter incorrect key of account Admin")
-            }
+            // if (items.length === 0) {
+            //     res.json({ message: "You enter incorrect key of account Admin" })
+            //     throw new Error("You enter incorrect key of account Admin")
+            // }
 
             res.json(items)
 
