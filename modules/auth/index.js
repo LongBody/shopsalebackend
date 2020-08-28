@@ -146,22 +146,20 @@ const handler = {
         }
     },
 
-    async update(req, res, next) {
+    async EnterKey(req, res, next) {
         try {
-            let data = req.body
-            console.log(data)
-            let id = req.body.email
+            let key = req.query.keyAdmin
 
-            if (!id) {
-                throw new Error(`Require 'id' to update!`)
+            console.log(key)
+
+            let items = await userProfileModel.find({ keyAdmin: key })
+
+            if (items.length === 0) {
+                res.json({ message: "You enter incorrect key of account Admin" })
+                throw new Error("You enter incorrect key of account Admin")
             }
 
-            let item = await userProfileModel.findByIdAndUpdate(
-                id,
-                data, { new: true }
-            )
-
-            res.json(item)
+            res.json(items)
 
 
         } catch (err) {
