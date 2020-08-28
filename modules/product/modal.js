@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
 const productSchema = require('./schema')
 
-const MODEL_NAME = 'shopsale'
+const MODEL_NAME = 'products'
 const COLLECTION_NAME = 'products'
 
 
-const modelProduct = mongoose.model(MODEL_NAME, productSchema, COLLECTION_NAME)
+const modelProducts = mongoose.model(MODEL_NAME, productSchema, COLLECTION_NAME)
+
+console.log(modelProducts)
 
 // modelProduct.countDocuments()
 // modelProduct.find()
@@ -34,4 +36,4 @@ const modelProduct = mongoose.model(MODEL_NAME, productSchema, COLLECTION_NAME)
 //     console.log(data);
 // })
 
-module.exports = modelProduct
+module.exports = modelProducts

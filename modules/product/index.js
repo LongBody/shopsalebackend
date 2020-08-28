@@ -91,7 +91,7 @@ const handler = {
         try {
             console.log(req.body)
             let data = req.body // { title: '123', description: '123' }
-            console.log(data + "ok")
+            console.log("created")
             let item = await productModel.create(data) // { _id: '', title, description }
             res.json(item)
         } catch (err) {

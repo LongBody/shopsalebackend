@@ -15,7 +15,6 @@ const port = 8888
 app.use(cors());
 // const router = require('./routers')
 
-
 app.use(bodyParser.urlencoded({ extended: false })); // Parses urlencoded bodies
 app.use(bodyParser.json()); // Send JSON responses
 
@@ -45,6 +44,71 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', true);
     return next();
 });
+
+const users = []
+
+const addUser = ({ id, name, room }) => {
+
+    const existUser = users.find((user) => user.name === name && user.room === room)
+    if (!existUser) {
+        const user = { id, name, room }
+        users.push(user)
+    }
+
+    return users
+}
+
+const getUser = (id) => users.find((user) => user.id === id)
+
+const getUserInRoom = (room) => users.find((user) => user.room === room)
+
+
+
+io.on('connection', (socket) => {
+    socket.on("join", function(data) {
+        // manageUser.push(data)
+        // socket.user
+        console.log(data)
+        console.log(socket.id)
+
+        if (data.room === "") {
+            data.room = users[0].room
+        }
+
+        const user = addUser({ id: socket.id, name: data.name, room: data.room })
+            // if (data.name == "LongBody") {
+            //     console.log(socket.id)
+            // } else
+            //     socket.join(data.room)
+            // console.log(user.room)
+        console.log(user)
+        socket.join(user[0].room)
+        console.log(socket.adapter.rooms)
+
+    })
+
+    socket.on("sendMessage", function(message) {
+
+        io.to("5f3f981b9e35ec0024d18a6c").emit('message', { user: "long", text: message })
+            // io.sockets.emit("server-send-message", { userName: socket.userName, message: data })
+    })
+
+    // socket.on("logout", function(data) {
+    //     manageUser.splice(manageUser.indexOf(socket.userName), 1)
+    //     socket.broadcast.emit("server-send-listUser", manageUser)
+    // })
+
+    // socket.on("someone-typing", function() {
+    //     socket.broadcast.emit("server-send-someone-typing")
+
+
+    // })
+
+    // socket.on("someone-stop-typing", function() {
+    //     socket.broadcast.emit("server-send-someone-stop-typing")
+    // })
+
+})
 
 
 

@@ -35,3 +35,5 @@ const productSchema = new Schema({
 //     console.log(err);
 //     console.log(data);
 // })
+
+module.exports = productSchema

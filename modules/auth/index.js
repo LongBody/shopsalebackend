@@ -50,7 +50,7 @@ const handler = {
 
         res.json({
             item,
-            message: "You have register Successfully"
+            message: "You have register Successfully (Check Your Email)"
         })
 
     },
@@ -116,7 +116,7 @@ const handler = {
             let item = await userProfileModel.findByIdAndUpdate(id, { verify: true, }, )
 
             console.log(item)
-            res.send("Verify Successfully")
+            res.send("<div><h1>Verify Successfully</h1></div>")
 
         } catch (err) {
             next(err)
@@ -128,6 +128,29 @@ const handler = {
             let data = req.body
             console.log(data)
             let id = req.body._id
+
+            if (!id) {
+                throw new Error(`Require 'id' to update!`)
+            }
+
+            let item = await userProfileModel.findByIdAndUpdate(
+                id,
+                data, { new: true }
+            )
+
+            res.json(item)
+
+
+        } catch (err) {
+            next(err)
+        }
+    },
+
+    async update(req, res, next) {
+        try {
+            let data = req.body
+            console.log(data)
+            let id = req.body.email
 
             if (!id) {
                 throw new Error(`Require 'id' to update!`)
