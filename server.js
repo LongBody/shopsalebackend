@@ -3,6 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const router = require('./routers')
 var cors = require('cors');
+const { Console } = require('console');
 
 
 require('dotenv').config()
@@ -65,24 +66,15 @@ const getUserInRoom = (room) => users.find((user) => user.room === room)
 
 
 io.on('connection', (socket) => {
+
+    console.log(socket.id)
+
     socket.on("join", function(data) {
         // manageUser.push(data)
-        // socket.user
+        // socket.use
         console.log(data)
-        console.log(socket.id)
-
-        if (data.room === "") {
-            data.room = users[0].room
-        }
-
-        const user = addUser({ id: socket.id, name: data.name, room: data.room })
-            // if (data.name == "LongBody") {
-            //     console.log(socket.id)
-            // } else
-            //     socket.join(data.room)
-            // console.log(user.room)
-        console.log(user)
-        socket.join(user[0].room)
+        socket.join(data.room)
+        socket.emit('server-admin-join', data)
         console.log(socket.adapter.rooms)
 
     })
