@@ -4,8 +4,9 @@ const bodyParser = require('body-parser')
 const router = require('./routers')
 var cors = require('cors');
 const { Console } = require('console');
-
-
+const passport = require('passport');
+const cookieSession = require('cookie-session')
+require('./passport-setup');
 require('dotenv').config()
 
 const app = express()
@@ -29,6 +30,11 @@ app.use((err, req, res, next) => {
     res.status(400).json({ message, stack })
 })
 
+app.use(cookieSession({
+    name: 'tuto-session',
+    keys: ['key1', 'key2']
+}))
+
 app.use(function(req, res, next) {
     var allowedOrigins = ['http://127.0.0.1:8020', 'http://localhost:3000', 'http://127.0.0.1:9000', 'http://127.0.0.1:5501/index.html', 'http://127.0.0.1:5501',
         'http://localhost:8000/api/list-music', 'http://localhost:8000/api/list-music/?search=em', 'http://localhost:8000/api/list-music/find/?search=em', 'http://localhost:8000/api/list-music/?pageSize=8&pageIndex=1',
@@ -46,24 +52,6 @@ app.use(function(req, res, next) {
     return next();
 });
 
-const users = []
-
-const addUser = ({ id, name, room }) => {
-
-    const existUser = users.find((user) => user.name === name && user.room === room)
-    if (!existUser) {
-        const user = { id, name, room }
-        users.push(user)
-    }
-
-    return users
-}
-
-const getUser = (id) => users.find((user) => user.id === id)
-
-const getUserInRoom = (room) => users.find((user) => user.room === room)
-
-
 
 io.on('connection', (socket) => {
 
@@ -73,7 +61,8 @@ io.on('connection', (socket) => {
         // manageUser.push(data)
         // socket.use
         console.log(data)
-        socket.join(data.room)
+            // socket.join(data.room)
+        socket.join("e10adc3949ba59abbe56e057f20f883e")
         socket.emit('server-admin-join', data)
         console.log(socket.adapter.rooms)
 
@@ -81,7 +70,7 @@ io.on('connection', (socket) => {
 
     socket.on("sendMessage", function(message) {
 
-        io.to("5f3f981b9e35ec0024d18a6c").emit('message', { user: "long", text: message })
+        io.to("e10adc3949ba59abbe56e057f20f883e").emit('message', { user: "long", text: message })
             // io.sockets.emit("server-send-message", { userName: socket.userName, message: data })
     })
 
@@ -100,6 +89,41 @@ io.on('connection', (socket) => {
     //     socket.broadcast.emit("server-send-someone-stop-typing")
     // })
 
+})
+
+
+const isLoggedIn = (req, res, next) => {
+    if (req.user) {
+        next();
+    } else {
+        res.sendStatus(401);
+    }
+}
+
+// Initializes passport and passport sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Example protected and unprotected routes
+app.get('/failed', (req, res) => res.send('You Failed to log in!'))
+
+// In this route you can see that if the user is logged in u can acess his info in: req.user
+app.get('/good', isLoggedIn, (req, res) => res.send(`Welcome mr ${req.user.displayName}!`))
+
+// Auth Routes
+app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/good');
+    }
+);
+
+app.get('/logout', (req, res) => {
+    req.session = null;
+    req.logout();
+    res.redirect('/');
 })
 
 
