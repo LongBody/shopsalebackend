@@ -1,6 +1,10 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
+require('dotenv').config()
+const clientID = process.env.clientID
+const clientSecret = process.env.clientSecret
+
 passport.serializeUser(function(user, done) {
     /*
     From the user take just the id (to minimize the cookie size) and just pass the id of the user
@@ -20,9 +24,9 @@ passport.deserializeUser(function(user, done) {
 });
 
 passport.use(new GoogleStrategy({
-        clientID: "1079345342714-8q3900edhd8glu594i1kbgovile1bgio.apps.googleusercontent.com",
-        clientSecret: "jgnghvl-lA6T1LY1o929rOnC",
-        callbackURL: "http://localhost:8888/google/callback"
+        clientID: clientID,
+        clientSecret: clientSecret,
+        callbackURL: "https://shopsale.herokuapp.com/google/callback"
     },
     function(accessToken, refreshToken, profile, done) {
         /*
