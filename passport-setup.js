@@ -1,9 +1,10 @@
 const passport = require('passport');
+require('dotenv').config()
+const clientID = process.env.CLIENT_ID
+const clientSecret = process.env.CLIENT_SECRET
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-require('dotenv').config()
-const clientID = process.env.clientID
-const clientSecret = process.env.clientSecret
+
 
 passport.serializeUser(function(user, done) {
     /*
@@ -26,7 +27,7 @@ passport.deserializeUser(function(user, done) {
 passport.use(new GoogleStrategy({
         clientID: clientID,
         clientSecret: clientSecret,
-        callbackURL: "https://shopsale.herokuapp.com/google/callback"
+        callbackURL: "http://localhost:8888/google/callback"
     },
     function(accessToken, refreshToken, profile, done) {
         /*
