@@ -118,7 +118,8 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: '
     function(req, res) {
         // Successful authentication, redirect home.
         localStorage.setItem("userShopsale", JSON.stringify(req.user));
-        res.redirect('https://longbody.github.io/shopsale/#/shopsale/')
+        res.redirect('http://localhost:3000/shopsale#/')
+            // res.redirect('https://longbody.github.io/shopsale/#/shopsale/')
     }
 );
 
