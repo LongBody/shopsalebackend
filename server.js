@@ -113,7 +113,7 @@ app.get('/good', (req, res) => {
     console.log(req.user)
     console.log(typeof req.user)
     console.log(req.user.emails)
-    res.json(req.user.emails.value)
+    res.json(req.user)
 })
 
 // Auth Routes
