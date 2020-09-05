@@ -109,12 +109,7 @@ app.use(passport.session());
 app.get('/failed', (req, res) => res.send('You Failed to log in!'))
 
 // In this route you can see that if the user is logged in u can acess his info in: req.user
-app.get('/good', (req, res) => {
-    console.log(req.user)
-    console.log(typeof req.user)
-    console.log(req.user.emails)
-    res.json(req.user)
-})
+app.get('/good', isLoggedIn, (req, res) => res.send(req.user))
 
 // Auth Routes
 app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -125,7 +120,6 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: '
         // localStorage.setItem("userShopsale", JSON.stringify(req.user));
         // res.redirect('http://localhost:3000/shopsale#/')
         res.redirect('/good')
-            // res.send(req.user)
     }
 );
 
