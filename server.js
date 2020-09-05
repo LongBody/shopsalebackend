@@ -8,6 +8,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session')
 require('./passport-setup');
 require('dotenv').config()
+var localStorage = require('localStorage')
 
 const app = express()
 
@@ -116,7 +117,8 @@ app.get('/google', passport.authenticate('google', { scope: ['profile', 'email']
 app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
     function(req, res) {
         // Successful authentication, redirect home.
-        res.send(req.user)
+        localStorage.setItem("userShopsale", JSON.stringify(req.user));
+        res.redirect('https://longbody.github.io/shopsale/#/shopsale/')
     }
 );
 
