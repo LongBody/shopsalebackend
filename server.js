@@ -119,7 +119,8 @@ app.get('/google/callback', passport.authenticate('google', { failureRedirect: '
         // Successful authentication, redirect home.
         // localStorage.setItem("userShopsale", JSON.stringify(req.user));
         // res.redirect('http://localhost:3000/shopsale#/')
-        res.redirect('/good')
+        // res.redirect('/good')
+        res.send(req.user)
     }
 );
 
