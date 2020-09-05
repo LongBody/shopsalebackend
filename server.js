@@ -126,9 +126,6 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
-
-
-
 http.listen(process.env.PORT || port, '0.0.0.0', () => {
     console.log('listening on *:' + port);
 });
