@@ -37,10 +37,8 @@ app.use(cookieSession({
 }))
 
 app.use(function(req, res, next) {
-    var allowedOrigins = ['http://127.0.0.1:8020', 'http://localhost:3000', 'http://127.0.0.1:9000', 'http://127.0.0.1:5501/index.html', 'http://127.0.0.1:5501',
-        'http://localhost:8000/api/list-music', 'http://localhost:8000/api/list-music/?search=em', 'http://localhost:8000/api/list-music/find/?search=em', 'http://localhost:8000/api/list-music/?pageSize=8&pageIndex=1',
-        'https://longbody.github.io/listmusicfront', 'https://listmusicnodejs.herokuapp.com/api/list-music', 'https://listmusicnodejs.herokuapp.com/api/list-music/find/?search=em',
-        'https://listmusicnodejs.herokuapp.com/api/list-music/?search=em', 'https://listmusicnodejs.herokuapp.com/api/list-music/?pageSize=8&pageIndex=1', 'localhost:7000/api/categories/find/?search=', 'https://listmusicnodejs.herokuapp.com/api/categories/find/?search='
+    var allowedOrigins = ['http://127.0.0.1:8020', 'http://localhost:3000', 'http://localhost:3000/shopsale#/shopsale/sign-in',
+        'https://shopsale.herokuapp.com/', 'https://shopsale.herokuapp.com/google/callback'
     ];
     var origin = req.headers.origin;
     if (allowedOrigins.indexOf(origin) > -1) {
