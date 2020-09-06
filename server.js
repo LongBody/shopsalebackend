@@ -109,12 +109,9 @@ app.use(passport.session());
 app.get('/failed', (req, res) => res.send('You Failed to log in!'))
 
 // In this route you can see that if the user is logged in u can acess his info in: req.user
-app.get('/good', (req, res) => {
-    let user = {
-        email: req.user.emails[0].value,
-        verify: req.user.emails[0].verified,
-    }
-    res.json(user)
+app.get('/good', isLoggedIn, (req, res) => {
+
+    res.send(req.user)
 })
 
 // Auth Routes
