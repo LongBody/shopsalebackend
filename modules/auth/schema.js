@@ -32,7 +32,8 @@ const userProfileSchema = new Schema({
         enum: ['admin', 'user']
     }],
     token: String,
-    verify: Boolean
+    verify: Boolean,
+    productCart: Array
 })
 
 module.exports = userProfileSchema

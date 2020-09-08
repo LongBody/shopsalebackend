@@ -127,15 +127,16 @@ const handler = {
         try {
             let data = req.body
             console.log(data)
-            let id = req.body._id
+            let id = req.query._id
+
+            console.log(id)
 
             if (!id) {
                 throw new Error(`Require 'id' to update!`)
             }
 
             let item = await userProfileModel.findByIdAndUpdate(
-                id,
-                data, { new: true }
+                id, data, { new: true }
             )
 
             res.json(item)

@@ -103,6 +103,9 @@ const handler = {
             let data = req.body
             let id = req.body._id
 
+
+            console.log(id)
+
             if (!id) {
                 throw new Error(`Require 'id' to update!`)
             }
