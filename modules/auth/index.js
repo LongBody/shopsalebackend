@@ -3,6 +3,7 @@ const { signToken, verifyToken, SECRET_STRING } = require('./jwt')
 let crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer");
+const { Console } = require('console');
 
 const handler = {
     async createUser(req, res, next) {
@@ -161,6 +162,25 @@ const handler = {
 
             res.json(items)
 
+        } catch (err) {
+            next(err)
+        }
+    },
+
+    async getCartUser(req, res, next) {
+        try {
+            let id = req.query.id
+
+
+            let items = await userProfileModel.find({ _id: id })
+
+            console.log(items[0].productCart)
+
+            // if (items.length === 0) {
+            //     res.json({ message: "You enter incorrect key of account Admin" })
+            //     throw new Error("You enter incorrect key of account Admin")
+            // }
+            res.json(items[0].productCart)
 
         } catch (err) {
             next(err)
