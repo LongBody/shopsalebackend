@@ -126,8 +126,7 @@ const handler = {
     async update(req, res, next) {
         try {
             let data = req.body
-            console.log(data)
-            let id = req.query._id
+            let id = data.id
 
             console.log(id)
 
