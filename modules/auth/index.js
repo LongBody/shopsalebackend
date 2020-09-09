@@ -223,8 +223,9 @@ const handler = {
         let user = {
             email: email,
             fullName: name,
+            password: "none",
             roles: ['user'],
-            verify: true
+            verify: true,
         }
 
         let item = await userProfileModel.create(user)
