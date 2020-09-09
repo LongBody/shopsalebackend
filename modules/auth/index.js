@@ -129,8 +129,6 @@ const handler = {
             let data = req.body
             let id = req.query.id
 
-
-
             if (!id) {
                 throw new Error(`Require 'id' to update!`)
             }
@@ -173,16 +171,21 @@ const handler = {
         try {
             let id = req.query.id
 
+            let user = []
+
+            console.log(typeof user)
+
 
             let items = await userProfileModel.find({ _id: id })
 
-            console.log(items[0].productCart)
+            console.log(typeof items[0].productCart)
+            console.log(items)
 
             // if (items.length === 0) {
             //     res.json({ message: "You enter incorrect key of account Admin" })
             //     throw new Error("You enter incorrect key of account Admin")
             // }
-            res.send(items[0].productCart)
+            res.send(items[0])
 
         } catch (err) {
             next(err)
