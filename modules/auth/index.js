@@ -127,17 +127,19 @@ const handler = {
     async update(req, res, next) {
         try {
             let data = req.body
-            let id = data.id
+            let id = req.query.id
 
-            console.log(id)
+
 
             if (!id) {
                 throw new Error(`Require 'id' to update!`)
             }
 
             let item = await userProfileModel.findByIdAndUpdate(
-                id, data, { new: true }
+                id, { productCart: data }, { new: true }
             )
+
+
 
             res.json(item)
 
