@@ -20,39 +20,45 @@ const handler = {
             verify: false
         }
 
-        let userPayload = user
-        userPayload.accessToken = signToken(user)
 
-        let item = await userProfileModel.create(user)
-        let verifyUrl = "https://shopsale.herokuapp.com/api/sign-in/verifyEmail" + userPayload.accessToken
+        let checkEmail = await userProfileModel.find({ email: user.email })
+        if (checkEmail) {
+            res.json({
+                message: "Email has been register or maybe not correct"
+            })
+        } else {
 
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'shopsalevn11@gmail.com',
-                pass: 'lasvegasbody30112k'
-            }
-        });
+            let userPayload = user
+            userPayload.accessToken = signToken(user)
 
+            let item = await userProfileModel.create(user)
+            let verifyUrl = "https://shopsale.herokuapp.com/api/sign-in/verifyEmail" + userPayload.accessToken
 
-
-
-
-        jwt.sign(item._id, SECRET_STRING, async(err) => {
-            await transporter.sendMail({
-                from: 'shopsalevn11@gmail.com', // sender address
-                to: user.email, // list of receivers
-                subject: "Verify Email ✔ \n", // Subject line
-                html: `<a  class="btn btn-success" href="${verifyUrl}"  role="button">Click to verify your email</a>`
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'shopsalevn11@gmail.com',
+                    pass: 'lasvegasbody30112k'
+                }
             });
-        })
+
+            jwt.sign(item._id, SECRET_STRING, async(err) => {
+                await transporter.sendMail({
+                    from: 'shopsalevn11@gmail.com', // sender address
+                    to: user.email, // list of receivers
+                    subject: "Verify Email ✔ \n", // Subject line
+                    html: `<a  class="btn btn-success" href="${verifyUrl}"  role="button">Click to verify your email</a>`
+                });
+            })
 
 
 
-        res.json({
-            item,
-            message: "You have register Successfully (Check Your Email)"
-        })
+            res.json({
+                item,
+                message: "You have register Successfully (Check Your Email)"
+            })
+        }
+
 
     },
     async logIn(req, res, next) {
@@ -190,6 +196,40 @@ const handler = {
         } catch (err) {
             next(err)
         }
+    },
+
+    async signWithGG(req, res, next) {
+        try {
+            let email = req.query.email
+
+            let items = await userProfileModel.find({ email: email })
+
+            // if (items.length === 0) {
+            //     res.json({ message: "You enter incorrect key of account Admin" })
+            //     throw new Error("You enter incorrect key of account Admin")
+            // }
+            res.send(items[0]._id)
+
+        } catch (err) {
+            next(err)
+        }
+    },
+
+
+    async createUserGG(req, res, next) {
+
+        let { email, name } = req.query
+
+        let user = {
+            email: email,
+            fullName: name,
+            roles: ['user'],
+            verify: true
+        }
+
+        let item = await userProfileModel.create(user)
+
+        res.json(item)
     },
 
     validateAccessToken(req, res, next) {
