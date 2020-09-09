@@ -182,7 +182,7 @@ const handler = {
             //     res.json({ message: "You enter incorrect key of account Admin" })
             //     throw new Error("You enter incorrect key of account Admin")
             // }
-            res.json(items[0].productCart)
+            res.send(items[0].productCart)
 
         } catch (err) {
             next(err)
