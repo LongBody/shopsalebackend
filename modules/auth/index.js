@@ -27,7 +27,7 @@ const handler = {
             let user = {
                 email: email,
                 password: passwordHash,
-                fullName: lastName + firstName,
+                fullName: firstName + " " + lastName,
                 roles: ['user'],
                 verify: false
             }
