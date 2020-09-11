@@ -31,6 +31,7 @@ const userProfileSchema = new Schema({
         enum: ['admin', 'user']
     }],
     token: String,
+    location: String,
     verify: Boolean,
     productCart: Array
 })

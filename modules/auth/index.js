@@ -135,6 +135,27 @@ const handler = {
         }
     },
 
+
+    async updateLocation(req, res, next) {
+
+        try {
+
+            let { id, location } = req.query
+            if (!id) {
+                throw new Error(`Require 'id' to update!`)
+            }
+
+            let item = await userProfileModel.findByIdAndUpdate(id, { location: location })
+
+            item.password = ""
+
+            res.send(item)
+
+        } catch (err) {
+            next(err)
+        }
+    },
+
     async update(req, res, next) {
         try {
             let data = req.body
