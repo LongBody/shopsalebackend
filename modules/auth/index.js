@@ -234,7 +234,12 @@ const handler = {
             //     res.json({ message: "You enter incorrect key of account Admin" })
             //     throw new Error("You enter incorrect key of account Admin")
             // }
-            res.send(items[0]._id)
+
+            let data = {
+                id: items[0]._id,
+                location: items[0].location
+            }
+            res.send(data)
 
         } catch (err) {
             next(err)
