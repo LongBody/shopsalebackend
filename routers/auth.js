@@ -21,7 +21,7 @@ authRouter.get('/get-cart', authModule.getCartUser)
 
 authRouter.get('/google', authModule.signWithGG)
 
-authRouter.get('/google-create-user', authModule.createUserGG)
+authRouter.post('/google-create-user', authModule.createUserGG)
 
 
 
