@@ -9,6 +9,8 @@ authRouter.post('/', authModule.createUser)
 
 authRouter.get('/verifyEmail:token', authModule.verifyEmail)
 
+// authRouter.get('/find-user', authModule.FindUserByEmail)
+
 authRouter.put('/', authModule.update)
 
 authRouter.get('/enter-key', authModule.EnterKey)

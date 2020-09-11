@@ -7,7 +7,6 @@ const userProfileSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
         validate: {
             validator(email) {
                 let isValidEmail = regexEmail.test(email)

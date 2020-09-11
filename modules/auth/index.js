@@ -12,21 +12,26 @@ const handler = {
 
         let passwordHash = hashMd5(password)
 
-        let user = {
-            email: email,
-            password: passwordHash,
-            fullName: lastName + firstName,
-            roles: ['user'],
-            verify: false
-        }
+        console.log(email)
 
 
-        let checkEmail = await userProfileModel.find({ email: user.email })
-        if (checkEmail) {
+
+        let checkEmail = await userProfileModel.find({ email: email })
+        console.log(checkEmail)
+        if (checkEmail.length !== 0) {
             res.json({
                 message: "Email has been register or maybe not correct"
             })
         } else {
+
+            let user = {
+                email: email,
+                password: passwordHash,
+                fullName: lastName + firstName,
+                roles: ['user'],
+                verify: false
+            }
+
 
             let userPayload = user
             userPayload.accessToken = signToken(user)
