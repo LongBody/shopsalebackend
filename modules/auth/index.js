@@ -145,7 +145,7 @@ const handler = {
                 throw new Error(`Require 'id' to update!`)
             }
 
-            let item = await userProfileModel.findByIdAndUpdate(id, { location: location })
+            let item = await userProfileModel.findByIdAndUpdate(id, { location: location }, { new: true })
 
             item.password = ""
 
