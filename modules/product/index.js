@@ -58,6 +58,18 @@ const handler = {
                 searchWord = search.replace(/dong|Dong/g, "đong");
             }
 
+            if (search.toLowerCase().includes("dac")) {
+                searchWord = search.replace(/dac|Dac/g, "đac");
+            }
+
+            if (search.toLowerCase().includes("doi")) {
+                searchWord = search.replace(/doi|Doi/g, "đoi");
+            }
+
+            if (search.toLowerCase().includes("do")) {
+                searchWord = search.replace(/do|Do/g, "đo");
+            }
+
 
             var phrase = "\"" + searchWord + "\""
 
