@@ -237,7 +237,8 @@ const handler = {
 
             let data = {
                 id: items[0]._id,
-                location: items[0].location
+                location: items[0].location,
+                phone: items[0].phone
             }
             res.send(data)
 
