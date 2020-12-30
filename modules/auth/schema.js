@@ -32,6 +32,7 @@ const userProfileSchema = new Schema({
     }],
     token: String,
     location: String,
+    phone: String,
     verify: Boolean,
     productCart: Array
 })

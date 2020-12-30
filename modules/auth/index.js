@@ -136,16 +136,16 @@ const handler = {
     },
 
 
-    async updateLocation(req, res, next) {
+    async updateLocationAndPhone(req, res, next) {
 
         try {
 
-            let { id, location } = req.query
+            let { id, location, phone } = req.query
             if (!id) {
                 throw new Error(`Require 'id' to update!`)
             }
 
-            let item = await userProfileModel.findByIdAndUpdate(id, { location: location }, { new: true })
+            let item = await userProfileModel.findByIdAndUpdate(id, { location: location, phone: phone }, { new: true })
 
             item.password = ""
 

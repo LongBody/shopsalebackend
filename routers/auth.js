@@ -9,7 +9,7 @@ authRouter.post('/', authModule.createUser)
 
 authRouter.get('/verifyEmail:token', authModule.verifyEmail)
 
-authRouter.get('/update-location', authModule.updateLocation)
+authRouter.get('/update-location', authModule.updateLocationAndPhone)
 
 authRouter.put('/', authModule.update)
 
