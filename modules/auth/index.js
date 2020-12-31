@@ -4,6 +4,8 @@ let crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer");
 const { Console } = require('console');
+require('dotenv').config()
+const passwordDOTENV = process.env.PASSWORD_EMAIL
 
 const handler = {
     async createUser(req, res, next) {
@@ -11,9 +13,6 @@ const handler = {
         let { email, password, firstName, lastName } = req.query
 
         let passwordHash = hashMd5(password)
-
-        console.log(email)
-
 
 
         let checkEmail = await userProfileModel.find({ email: email })
@@ -39,11 +38,14 @@ const handler = {
             let item = await userProfileModel.create(user)
             let verifyUrl = "https://shopsale.herokuapp.com/api/sign-in/verifyEmail" + userPayload.accessToken
 
+
+
+            console.log(password)
             let transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
                     user: 'shopsalevn11@gmail.com',
-                    pass: 'lasvegasbody30112k'
+                    pass: passwordDOTENV
                 }
             });
 
