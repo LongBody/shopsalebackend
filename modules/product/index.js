@@ -13,7 +13,7 @@ const handler = {
 
             let limit = pageSize
             let skip = (pageIndex - 1) * pageSize
-            let sortInfo = `${sort == 'desc' ? '-' : ''}${sortBy}`
+                // let sortInfo = `${sort == 'desc' ? '-' : ''}${sortBy}`
 
             // let fieldsArr = field.split(',').map(field => field.trim())
 
@@ -26,11 +26,12 @@ const handler = {
                 })
                 res.json(items)
 
-            } else if (pageIndex) {
-                let items = await productModel.find({}).skip(skip).limit(limit).sort(sortInfo)
+            } else
+            if (pageIndex) {
+                let items = await productModel.find({}).skip(skip).limit(limit)
                 res.json(items)
             } else {
-                let items = await productModel.find({}).sort(sortInfo)
+                let items = await productModel.find({})
                 res.json(items)
             }
 
