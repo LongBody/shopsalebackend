@@ -18,8 +18,8 @@ const port = 8888
 app.use(cors());
 // const router = require('./routers')
 
-app.use(bodyParser.urlencoded({ extended: false })); // Parses urlencoded bodies
-app.use(bodyParser.json()); // Send JSON responses
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 
 app.use(router)
 
